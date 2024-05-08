@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "data_analysis"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+pandas = { version = "^2.2.2", python = ">=3.9" }
+numpy = { version = "^1.26.4", python = ">=3.9" }
+httpx = { version = "^0.27.0", python = ">=3.8" }
+
+[build-system]
+requires-python = ">=3.11"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
