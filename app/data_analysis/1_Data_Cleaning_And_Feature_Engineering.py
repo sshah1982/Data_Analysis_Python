@@ -3,6 +3,7 @@ import numpy as np
 from app.config.AppSettings import AppSettings
 from github import Github, Auth
 from io import StringIO
+from datetime import date
 
 settings = AppSettings()
 
@@ -77,7 +78,6 @@ df_cars.drop(["S.No.", "Power_New", "Engine_New"], axis = 1, inplace = True)
 df_cars.info()
 
 #Add new calculated columns
-from datetime import date
 df_cars["Car_Age"] = date.today().year - df_cars["Year"]
 df_cars.head()
 
