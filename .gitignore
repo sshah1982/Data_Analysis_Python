@@ -1,5 +1,3 @@
-.pytest_cache
-.venv/
-__pycache__
-poetry.lock
 app/config/config.properties
+.spyproject/*.*
+__pycache__
