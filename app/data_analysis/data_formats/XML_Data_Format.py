@@ -146,4 +146,4 @@ xmlToDf = pd.DataFrame(all_items, columns=[
     "BILLING_STATE", "BILLING_ZIP", "BILLING_COUNTRY", "ITEM_PART_NUMBER", "ITEM_NAME", "ITEM_QTY", "ITEM_PRICE",
     "ITEM_SHIP_DATE", "ITEM_COMMENT"])
 
-print(xmlToDf.head())
+xmlToDf.head()
