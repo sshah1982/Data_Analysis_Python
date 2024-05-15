@@ -1,23 +1,22 @@
 import pandas as pd
 import numpy as np
 from app.config.AppSettings import AppSettings
-from github import Github, Auth
-from io import StringIO
 from datetime import date
 
 settings = AppSettings()
 
-auth = Auth.Token(settings._token)
-g = Github(auth=auth)
+url_list = []
+url_list.append(settings._common_account)
+url_list.append(settings._repo_name)
+url_list.append(settings._branch_name)
+url_list.append(settings._app_root)
+url_list.append(settings._data_analysis_folder)
+url_list.append(settings._raw_files_path)
+url_list.append(settings._csv_path)
 
-repo = g.get_repo(settings._common_url)
-csv_url = settings._raw_files_path + settings._csv_path
+csv_url = settings._raw_data_url + "/".join(url_list)
 
-contents = repo.get_contents(csv_url, ref="main")
-decoded_csv_content = contents.decoded_content.decode()
-
-csv_data = StringIO(decoded_csv_content)
-df_cars = pd.read_csv(csv_data, sep=",", header=0, skipinitialspace=True)
+df_cars = pd.read_csv(csv_url, sep=",", header=0, skipinitialspace=True)
 
 #Describing the data
 df_cars.head()
@@ -52,7 +51,7 @@ df_cars[numeric_columns] = df_cars[numeric_columns].replace(np.nan, 0, regex=Tru
 df_cars.head()
 
 #Splitting Engine column and converting to float for further analysis
-details = df_cars["Engine"].str.split("\s").str
+details = df_cars["Engine"].str.split("\\s").str
 df_cars["Engine_New"] = details.get(0)
 df_cars["Engine_New"] = df_cars["Engine_New"].fillna(0)
 df_cars["Engine_New"] = df_cars["Engine_New"].replace("null", "0")
@@ -61,7 +60,7 @@ df_cars["Engine"] = df_cars["Engine_New"]
 df_cars.head()
 
 #Splitting Power column and converting to float for further analysis
-details_p = df_cars["Power"].str.split("\s").str
+details_p = df_cars["Power"].str.split("\\s").str
 df_cars["Power_New"] = details_p.get(0)
 df_cars["Power_New"] = df_cars["Power_New"].fillna(0)
 df_cars["Power_New"] = df_cars["Power_New"].replace("null", "0")
@@ -87,9 +86,23 @@ df_cars["Brand"] = name_arr.get(0)
 df_cars["Model"] = name_arr.get(1)
 df_cars.head()
 
-#Writing cleaned CSV at designated path
-df_cars.to_csv(settings._cleaned_files_path + settings._cleaned_csv_path, index = False)
+#Remove last 2 entries from list tp prepare write URL
+csv_write_url = settings._raw_data_url
 
+write_url_list = url_list[: len(url_list) - 2]
+write_url = "/".join(write_url_list)
+write_url += ("/" + settings._cleaned_files_path + "/" + settings._cleaned_csv_path)
+
+csv_write_url += write_url
+
+#Writing cleaned CSV at designated path
+write_url_list = []
+write_url_list.append(settings._app_root)
+write_url_list.append(settings._data_analysis_folder)
+write_url_list.append(settings._cleaned_files_path)
+write_url_list.append(settings._cleaned_csv_path)
+
+df_cars.to_csv("/".join(write_url_list), index = False)
 
 
 
