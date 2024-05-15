@@ -86,15 +86,6 @@ df_cars["Brand"] = name_arr.get(0)
 df_cars["Model"] = name_arr.get(1)
 df_cars.head()
 
-#Remove last 2 entries from list tp prepare write URL
-csv_write_url = settings._raw_data_url
-
-write_url_list = url_list[: len(url_list) - 2]
-write_url = "/".join(write_url_list)
-write_url += ("/" + settings._cleaned_files_path + "/" + settings._cleaned_csv_path)
-
-csv_write_url += write_url
-
 #Writing cleaned CSV at designated path
 write_url_list = []
 write_url_list.append(settings._app_root)
