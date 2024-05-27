@@ -14,4 +14,5 @@ url_list.append(settings._parquet_path)
 
 parquet_url = settings._raw_data_url + "/".join(url_list)
 df_parquet = pd.read_parquet(parquet_url)
-print(df_parquet.head())
+
+df_parquet.head()

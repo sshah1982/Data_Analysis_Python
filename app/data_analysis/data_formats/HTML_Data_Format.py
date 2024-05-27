@@ -16,4 +16,4 @@ html_url = settings._raw_data_url + "/".join(url_list)
 
 df_html = pd.read_html(html_url)
 
-print(df_html[0].head())
+df_html[0].head()
