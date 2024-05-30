@@ -1,4 +1,5 @@
 app/config/config.properties
 .spyproject/*
 .idea/*
+**/.ipynb_checkpoints/*
 **/__pycache__/*
